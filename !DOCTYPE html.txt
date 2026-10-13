@@ -1,0 +1,2347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🔐 AI HealthCare Pro - Login</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        /* ============================================================
+           GLOBAL STYLES
+           ============================================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            min-height: 100vh;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* ============================================================
+           GLASSMORPHISM
+           ============================================================ */
+        .glass {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .glass-dark {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .glass-light {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* ============================================================
+           ANIMATIONS
+           ============================================================ */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.3); }
+            50% { box-shadow: 0 0 60px rgba(99, 102, 241, 0.6); }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0px) scale(1); }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0); opacity: 0; }
+            60% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+            20%, 40%, 60%, 80% { transform: translateX(10px); }
+        }
+
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+        .animate-slide { animation: slideIn 0.5s ease-out forwards; }
+        .animate-bounce-in { animation: bounceIn 0.5s ease-out forwards; }
+        .animate-shake { animation: shake 0.5s ease-in-out; }
+
+        .shimmer-text {
+            background: linear-gradient(90deg, #818cf8, #c084fc, #818cf8);
+            background-size: 200% 100%;
+            animation: shimmer 3s linear infinite;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ============================================================
+           LOGIN PAGE
+           ============================================================ */
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-box {
+            max-width: 420px;
+            width: 100%;
+            padding: 40px;
+            animation: slideIn 0.6s ease-out;
+        }
+
+        .login-box .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .login-box .input-group input {
+            width: 100%;
+            padding: 14px 16px 14px 48px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .login-box .input-group input:focus {
+            outline: none;
+            border-color: #818cf8;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .login-box .input-group input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .login-box .input-group .icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            opacity: 0.5;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .login-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.4);
+        }
+
+        .login-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* ============================================================
+           SCROLLBAR
+           ============================================================ */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #818cf8, #c084fc); border-radius: 10px; }
+
+        /* ============================================================
+           CHATBOT
+           ============================================================ */
+        .chat-container {
+            max-height: 400px;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+
+        .chat-message {
+            padding: 12px 18px;
+            border-radius: 18px;
+            max-width: 85%;
+            word-wrap: break-word;
+            animation: slideIn 0.3s ease-out;
+            margin-bottom: 8px;
+        }
+
+        .chat-message.user {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-message.bot {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+
+        /* ============================================================
+           VOICE BUTTON
+           ============================================================ */
+        .voice-btn {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .voice-btn:hover { transform: scale(1.1); }
+        .voice-btn.listening {
+            animation: pulse-glow 0.8s ease-in-out infinite;
+            background: #ef4444 !important;
+        }
+
+        /* ============================================================
+           CARDS
+           ============================================================ */
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+        .card-hover:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 30px 60px -15px rgba(99, 102, 241, 0.4);
+        }
+
+        /* ============================================================
+           NAV LINKS
+           ============================================================ */
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #818cf8, #c084fc);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+        .nav-link.active {
+            color: #c084fc;
+        }
+
+        /* ============================================================
+           LANGUAGE SELECTOR
+           ============================================================ */
+        .lang-btn {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+        }
+        .lang-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .lang-btn.active {
+            background: rgba(99, 102, 241, 0.3);
+            border: 1px solid #818cf8;
+        }
+
+        /* ============================================================
+           TOAST NOTIFICATIONS
+           ============================================================ */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .toast {
+            padding: 16px 24px;
+            border-radius: 12px;
+            animation: slideIn 0.3s ease-out;
+            max-width: 400px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .toast-success { background: linear-gradient(135deg, #059669, #34d399); color: white; }
+        .toast-error { background: linear-gradient(135deg, #dc2626, #ef4444); color: white; }
+        .toast-info { background: linear-gradient(135deg, #2563eb, #60a5fa); color: white; }
+
+        /* ============================================================
+           USER PROFILE
+           ============================================================ */
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .user-avatar:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+        }
+
+        .logout-btn {
+            padding: 6px 16px;
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 9999px;
+            color: #ef4444;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: rgba(239, 68, 68, 0.3);
+            transform: scale(1.05);
+        }
+
+        /* ============================================================
+           RESPONSIVE
+           ============================================================ */
+        @media (max-width: 768px) {
+            .glass { padding: 16px !important; }
+            .chat-message { max-width: 95%; }
+            .text-7xl { font-size: 2.5rem !important; }
+            .text-5xl { font-size: 2rem !important; }
+            .lang-btn { font-size: 0.65rem; padding: 2px 8px; }
+            .login-box { padding: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================================
+    TOAST CONTAINER
+    ============================================================ -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- ============================================================
+    LOGIN PAGE
+    ============================================================ -->
+    <div id="loginPage" class="login-container">
+        <div class="login-box glass">
+            <div class="text-center mb-8">
+                <div class="text-6xl mb-4 animate-float">🔐</div>
+                <h1 class="text-3xl font-bold shimmer-text">AI HealthCare Pro</h1>
+                <p class="text-gray-400 text-sm mt-2" id="loginSubtitle">Secure Login to Healthcare System</p>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="input-group">
+                    <span class="icon">👤</span>
+                    <input type="text" id="username" placeholder="Username" required />
+                </div>
+
+                <div class="input-group">
+                    <span class="icon">🔑</span>
+                    <input type="password" id="password" placeholder="Password" required />
+                </div>
+
+                <div class="flex items-center justify-between mb-6 text-sm">
+                    <label class="flex items-center text-gray-400">
+                        <input type="checkbox" class="mr-2 accent-indigo-500" checked />
+                        Remember me
+                    </label>
+                    <a href="#" onclick="showToast('Contact admin to reset password', 'info')" class="text-indigo-400 hover:text-indigo-300">Forgot password?</a>
+                </div>
+
+                <button type="submit" id="loginBtn" class="login-btn">
+                    🚀 Sign In
+                </button>
+            </form>
+
+            <!-- Language Selector -->
+            <div class="mt-6 text-center">
+                <p class="text-gray-400 text-xs mb-2">🌐 Select Language</p>
+                <div class="flex flex-wrap justify-center gap-1">
+                    <button type="button" onclick="setLanguage('en')" class="lang-btn active text-white" data-lang="en">🇬🇧 EN</button>
+                    <button type="button" onclick="setLanguage('ta')" class="lang-btn text-white" data-lang="ta">🇮🇳 தமிழ்</button>
+                    <button type="button" onclick="setLanguage('hi')" class="lang-btn text-white" data-lang="hi">🇮🇳 हिंदी</button>
+                    <button type="button" onclick="setLanguage('te')" class="lang-btn text-white" data-lang="te">🇮🇳 తెలుగు</button>
+                    <button type="button" onclick="setLanguage('kn')" class="lang-btn text-white" data-lang="kn">🇮🇳 ಕನ್ನಡ</button>
+                </div>
+            </div>
+
+            <!-- Demo Credentials -->
+            <div class="mt-6 p-4 glass-dark rounded-xl text-center">
+                <p class="text-gray-400 text-xs">🔑 Demo Credentials</p>
+                <p class="text-gray-300 text-sm mt-1">👤 <span class="text-indigo-400">admin</span> | 🔑 <span class="text-indigo-400">admin123</span></p>
+                <p class="text-gray-300 text-sm">👤 <span class="text-indigo-400">doctor</span> | 🔑 <span class="text-indigo-400">doctor123</span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+    MAIN APP (Hidden until login)
+    ============================================================ -->
+    <div id="mainApp" style="display: none;">
+
+        <!-- ============================================================
+        NAVIGATION
+        ============================================================ -->
+        <nav class="glass-dark sticky top-0 z-50 border-b border-white/5">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-wrap justify-between items-center h-16">
+                    <!-- Logo -->
+                    <div class="flex items-center space-x-3 cursor-pointer" onclick="navigate('home')">
+                        <div class="text-3xl animate-float">🔐</div>
+                        <div>
+                            <span class="text-xl font-bold shimmer-text" id="appTitle">AI HealthCare Pro</span>
+                            <span class="text-xs text-purple-300 block -mt-1" id="appSubtitle">Secure Healthcare System</span>
+                        </div>
+                    </div>
+
+                    <!-- User Info & Language -->
+                    <div class="flex items-center gap-2 md:gap-4">
+                        <div class="flex items-center gap-2">
+                            <div class="user-avatar" id="userAvatar" title="Logged in user">A</div>
+                            <span class="text-sm text-gray-300 hidden md:inline" id="userNameDisplay">Admin</span>
+                            <button onclick="handleLogout()" class="logout-btn">🚪 Logout</button>
+                        </div>
+                        <div class="flex flex-wrap gap-1">
+                            <button onclick="setLanguage('en')" class="lang-btn active text-white" data-lang="en">🇬🇧</button>
+                            <button onclick="setLanguage('ta')" class="lang-btn text-white" data-lang="ta">🇮🇳</button>
+                            <button onclick="setLanguage('hi')" class="lang-btn text-white" data-lang="hi">🇮🇳</button>
+                            <button onclick="setLanguage('te')" class="lang-btn text-white" data-lang="te">🇮🇳</button>
+                            <button onclick="setLanguage('kn')" class="lang-btn text-white" data-lang="kn">🇮🇳</button>
+                        </div>
+                        <button onclick="toggleMobile()" class="md:hidden text-2xl">☰</button>
+                    </div>
+                </div>
+
+                <!-- Desktop Nav -->
+                <div class="hidden md:flex justify-between items-center pb-2">
+                    <div class="flex space-x-1">
+                        <a onclick="navigate('home')" class="nav-link px-4 py-2 text-gray-300 hover:text-white transition" data-page="home" id="navHome">Home</a>
+                        <a onclick="navigate('dashboard')" class="nav-link px-4 py-2 text-gray-300 hover:text-white transition" data-page="dashboard" id="navDashboard">Dashboard</a>
+                        <a onclick="navigate('patients')" class="nav-link px-4 py-2 text-gray-300 hover:text-white transition" data-page="patients" id="navPatients">Patients</a>
+                        <a onclick="navigate('appointments')" class="nav-link px-4 py-2 text-gray-300 hover:text-white transition" data-page="appointments" id="navAppointments">Appointments</a>
+                        <a onclick="navigate('doctors')" class="nav-link px-4 py-2 text-gray-300 hover:text-white transition" data-page="doctors" id="navDoctors">Doctors</a>
+                        <a onclick="navigate('chatbot')" class="nav-link px-4 py-2 text-gray-300 hover:text-white transition" data-page="chatbot" id="navChatbot">💬 AI Chat</a>
+                    </div>
+                    <button onclick="navigate('chatbot')" class="px-4 py-2 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full text-sm font-medium hover:scale-105 transition" id="navAskAI">
+                        💬 Ask AI
+                    </button>
+                </div>
+
+                <!-- Mobile Menu -->
+                <div id="mobileMenu" class="hidden md:hidden py-4 border-t border-white/5">
+                    <a onclick="navigate('home')" class="block py-2 text-gray-300 hover:text-white" data-page="home" id="mNavHome">Home</a>
+                    <a onclick="navigate('dashboard')" class="block py-2 text-gray-300 hover:text-white" data-page="dashboard" id="mNavDashboard">Dashboard</a>
+                    <a onclick="navigate('patients')" class="block py-2 text-gray-300 hover:text-white" data-page="patients" id="mNavPatients">Patients</a>
+                    <a onclick="navigate('appointments')" class="block py-2 text-gray-300 hover:text-white" data-page="appointments" id="mNavAppointments">Appointments</a>
+                    <a onclick="navigate('doctors')" class="block py-2 text-gray-300 hover:text-white" data-page="doctors" id="mNavDoctors">Doctors</a>
+                    <a onclick="navigate('chatbot')" class="block py-2 text-gray-300 hover:text-white" data-page="chatbot" id="mNavChatbot">💬 AI Chat</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- ============================================================
+        PAGE CONTENT
+        ============================================================ -->
+        <div class="container mx-auto px-4 py-8" id="pageContent">
+            <!-- Rendered by JavaScript -->
+        </div>
+
+        <!-- ============================================================
+        FOOTER
+        ============================================================ -->
+        <footer class="glass-dark mt-16 border-t border-white/5">
+            <div class="container mx-auto px-4 py-6 text-center text-gray-400 text-sm">
+                <p>🔐 AI HealthCare Pro v5.0 · Secure Multi-Language Healthcare System</p>
+                <p class="mt-1" id="footerText">© 2024 · Built with ❤️ for better healthcare</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ============================================================
+    JAVASCRIPT - COMPLETE APPLICATION
+    ============================================================ -->
+    <script>
+        // ============================================================
+        // LANGUAGE DATA
+        // ============================================================
+        const translations = {
+            en: {
+                appTitle: 'AI HealthCare Pro',
+                appSubtitle: 'Secure Healthcare System',
+                loginSubtitle: 'Secure Login to Healthcare System',
+                navHome: 'Home',
+                navDashboard: 'Dashboard',
+                navPatients: 'Patients',
+                navAppointments: 'Appointments',
+                navDoctors: 'Doctors',
+                navChatbot: '💬 AI Chat',
+                navAskAI: '💬 Ask AI',
+                footer: '© 2024 · Built with ❤️ for better healthcare',
+                heroTitle: 'AI-Powered Healthcare Management',
+                heroSubtitle: 'Smart, secure healthcare management with AI assistance.',
+                heroChat: '💬 Chat with AI',
+                heroPatients: '📋 Manage Patients',
+                heroVoice: '🎤 Voice Command',
+                totalPatients: 'Total Patients',
+                appointments: 'Appointments',
+                activeDoctors: 'Active Doctors',
+                aiConversations: 'AI Conversations',
+                featureAI: 'AI Assistant',
+                featureAIDesc: 'Smart AI chatbot for healthcare queries.',
+                featureVoice: 'Voice Commands',
+                featureVoiceDesc: 'Use your voice to manage everything.',
+                featureAnalytics: 'Smart Analytics',
+                featureAnalyticsDesc: 'Real-time insights for better decisions.',
+                dashboard: 'Dashboard',
+                dashboardSub: 'Real-time healthcare insights',
+                quickAddPatient: 'Add New Patient',
+                quickBookAppointment: 'Book Appointment',
+                quickAddDoctor: 'Add Doctor',
+                recentActivity: 'Recent Activity',
+                addPatient: 'Add Patient',
+                bookAppointment: 'Book Appointment',
+                addDoctor: 'Add Doctor',
+                search: 'Search',
+                actions: 'Actions',
+                status: 'Status',
+                name: 'Name',
+                age: 'Age',
+                gender: 'Gender',
+                condition: 'Condition',
+                phone: 'Phone',
+                edit: 'Edit',
+                delete: 'Delete',
+                patient: 'Patient',
+                doctor: 'Doctor',
+                date: 'Date',
+                time: 'Time',
+                specialization: 'Specialization',
+                experience: 'Experience',
+                availability: 'Availability',
+                rating: 'Rating',
+                aiAssistant: 'AI Healthcare Assistant',
+                aiSub: 'Ask me anything about healthcare',
+                typeMessage: 'Type your message or use voice...',
+                send: 'Send',
+                voice: 'Voice',
+                clear: 'Clear',
+                startChat: 'Start a conversation with the AI assistant',
+                chatExample: 'Try: "Add patient John Doe" or "Show all patients"',
+                showPatients: '👤 Show Patients',
+                showAppointments: '📅 Show Appointments',
+                showDoctors: '👨‍⚕️ Show Doctors',
+                addPatientExample: '➕ Add Patient',
+                bookExample: '📋 Book Appointment',
+                addSuccess: 'added successfully!',
+                deleteSuccess: 'deleted successfully!',
+                updateSuccess: 'updated successfully!',
+                confirmDelete: 'Are you sure you want to delete this',
+                noPatients: 'No patients found',
+                noAppointments: 'No appointments found',
+                noDoctors: 'No doctors found',
+                welcomeUser: 'Welcome',
+                loginSuccess: 'Login successful!',
+                loginFailed: 'Invalid username or password!',
+                logoutSuccess: 'Logged out successfully!',
+            },
+            ta: {
+                appTitle: 'AI மருத்துவப் பராமரிப்பு',
+                appSubtitle: 'பாதுகாப்பான மருத்துவ அமைப்பு',
+                loginSubtitle: 'மருத்துவ அமைப்பில் பாதுகாப்பான உள்நுழைவு',
+                navHome: 'முகப்பு',
+                navDashboard: 'புள்ளிவிவரங்கள்',
+                navPatients: 'நோயாளிகள்',
+                navAppointments: 'சந்திப்புகள்',
+                navDoctors: 'மருத்துவர்கள்',
+                navChatbot: '💬 AI அரட்டை',
+                navAskAI: '💬 AI கேளுங்கள்',
+                footer: '© 2024 · சிறந்த மருத்துவ பராமரிப்புக்காக ❤️ உடன்',
+                heroTitle: 'AI-இயக்க மருத்துவ மேலாண்மை',
+                heroSubtitle: 'AI உதவியுடன் ஸ்மார்ட் மருத்துவ மேலாண்மை.',
+                heroChat: '💬 AI உடன் அரட்டை',
+                heroPatients: '📋 நோயாளிகளை நிர்வகி',
+                heroVoice: '🎤 குரல் கட்டளை',
+                totalPatients: 'மொத்த நோயாளிகள்',
+                appointments: 'சந்திப்புகள்',
+                activeDoctors: 'செயலில் உள்ள மருத்துவர்கள்',
+                aiConversations: 'AI உரையாடல்கள்',
+                featureAI: 'AI உதவியாளர்',
+                featureAIDesc: 'மருத்துவ கேள்விகளுக்கான ஸ்மார்ட் AI அரட்டை.',
+                featureVoice: 'குரல் கட்டளைகள்',
+                featureVoiceDesc: 'எல்லாவற்றையும் நிர்வகிக்க உங்கள் குரலைப் பயன்படுத்தவும்.',
+                featureAnalytics: 'ஸ்மார்ட் பகுப்பாய்வு',
+                featureAnalyticsDesc: 'சிறந்த முடிவுகளுக்கான நிகழ்நேர நுண்ணறிவு.',
+                dashboard: 'புள்ளிவிவரங்கள்',
+                dashboardSub: 'நிகழ்நேர மருத்துவ நுண்ணறிவு',
+                quickAddPatient: 'புதிய நோயாளியைச் சேர்க்கவும்',
+                quickBookAppointment: 'சந்திப்பை பதிவு செய்யவும்',
+                quickAddDoctor: 'மருத்துவரைச் சேர்க்கவும்',
+                recentActivity: 'சமீபத்திய செயல்பாடுகள்',
+                addPatient: 'நோயாளியைச் சேர்க்கவும்',
+                bookAppointment: 'சந்திப்பை பதிவு செய்யவும்',
+                addDoctor: 'மருத்துவரைச் சேர்க்கவும்',
+                search: 'தேடல்',
+                actions: 'செயல்கள்',
+                status: 'நிலை',
+                name: 'பெயர்',
+                age: 'வயது',
+                gender: 'பாலினம்',
+                condition: 'நிலைமை',
+                phone: 'தொலைபேசி',
+                edit: 'திருத்து',
+                delete: 'நீக்கு',
+                patient: 'நோயாளி',
+                doctor: 'மருத்துவர்',
+                date: 'தேதி',
+                time: 'நேரம்',
+                specialization: 'சிறப்பு',
+                experience: 'அனுபவம்',
+                availability: 'கிடைக்கும் தன்மை',
+                rating: 'மதிப்பீடு',
+                aiAssistant: 'AI மருத்துவ உதவியாளர்',
+                aiSub: 'மருத்துவம் பற்றி ஏதாவது கேளுங்கள்',
+                typeMessage: 'உங்கள் செய்தியை தட்டச்சு செய்யவும்...',
+                send: 'அனுப்பு',
+                voice: 'குரல்',
+                clear: 'அழி',
+                startChat: 'AI உதவியாளருடன் உரையாடலைத் தொடங்கவும்',
+                chatExample: 'முயற்சிக்கவும்: "நோயாளி ஜான் டோவை சேர்க்கவும்"',
+                showPatients: '👤 நோயாளிகளைக் காட்டு',
+                showAppointments: '📅 சந்திப்புகளைக் காட்டு',
+                showDoctors: '👨‍⚕️ மருத்துவர்களைக் காட்டு',
+                addPatientExample: '➕ நோயாளியைச் சேர்க்கவும்',
+                bookExample: '📋 சந்திப்பை பதிவு செய்யவும்',
+                addSuccess: 'வெற்றிகரமாக சேர்க்கப்பட்டது!',
+                deleteSuccess: 'வெற்றிகரமாக நீக்கப்பட்டது!',
+                updateSuccess: 'வெற்றிகரமாக புதுப்பிக்கப்பட்டது!',
+                confirmDelete: 'இதை நீக்க விரும்புகிறீர்களா?',
+                noPatients: 'நோயாளிகள் எதுவும் இல்லை',
+                noAppointments: 'சந்திப்புகள் எதுவும் இல்லை',
+                noDoctors: 'மருத்துவர்கள் எதுவும் இல்லை',
+                welcomeUser: 'வரவேற்கிறோம்',
+                loginSuccess: 'உள்நுழைவு வெற்றிகரமானது!',
+                loginFailed: 'தவறான பயனர்பெயர் அல்லது கடவுச்சொல்!',
+                logoutSuccess: 'வெற்றிகரமாக வெளியேறப்பட்டது!',
+            },
+            hi: {
+                appTitle: 'AI स्वास्थ्य सेवा',
+                appSubtitle: 'सुरक्षित स्वास्थ्य प्रणाली',
+                loginSubtitle: 'स्वास्थ्य प्रणाली में सुरक्षित लॉगिन',
+                navHome: 'होम',
+                navDashboard: 'डैशबोर्ड',
+                navPatients: 'मरीज़',
+                navAppointments: 'अपॉइंटमेंट',
+                navDoctors: 'डॉक्टर्स',
+                navChatbot: '💬 AI चैट',
+                navAskAI: '💬 AI से पूछें',
+                footer: '© 2024 · बेहतर स्वास्थ्य के लिए ❤️ के साथ',
+                heroTitle: 'AI-संचालित स्वास्थ्य प्रबंधन',
+                heroSubtitle: 'AI सहायता के साथ स्मार्ट स्वास्थ्य प्रबंधन.',
+                heroChat: '💬 AI से चैट करें',
+                heroPatients: '📋 मरीज़ प्रबंधित करें',
+                heroVoice: '🎤 वॉयस कमांड',
+                totalPatients: 'कुल मरीज़',
+                appointments: 'अपॉइंटमेंट',
+                activeDoctors: 'सक्रिय डॉक्टर्स',
+                aiConversations: 'AI वार्तालाप',
+                featureAI: 'AI सहायक',
+                featureAIDesc: 'स्वास्थ्य प्रश्नों के लिए स्मार्ट AI चैटबॉट.',
+                featureVoice: 'वॉयस कमांड्स',
+                featureVoiceDesc: 'सब कुछ प्रबंधित करने के लिए अपनी आवाज़ का उपयोग करें.',
+                featureAnalytics: 'स्मार्ट एनालिटिक्स',
+                featureAnalyticsDesc: 'बेहतर निर्णयों के लिए रीयल-टाइम अंतर्दृष्टि.',
+                dashboard: 'डैशबोर्ड',
+                dashboardSub: 'रीयल-टाइम स्वास्थ्य अंतर्दृष्टि',
+                quickAddPatient: 'नया मरीज़ जोड़ें',
+                quickBookAppointment: 'अपॉइंटमेंट बुक करें',
+                quickAddDoctor: 'डॉक्टर जोड़ें',
+                recentActivity: 'हाल की गतिविधियाँ',
+                addPatient: 'मरीज़ जोड़ें',
+                bookAppointment: 'अपॉइंटमेंट बुक करें',
+                addDoctor: 'डॉक्टर जोड़ें',
+                search: 'खोजें',
+                actions: 'कार्रवाई',
+                status: 'स्थिति',
+                name: 'नाम',
+                age: 'आयु',
+                gender: 'लिंग',
+                condition: 'स्थिति',
+                phone: 'फोन',
+                edit: 'संपादित करें',
+                delete: 'हटाएं',
+                patient: 'मरीज़',
+                doctor: 'डॉक्टर',
+                date: 'तारीख',
+                time: 'समय',
+                specialization: 'विशेषज्ञता',
+                experience: 'अनुभव',
+                availability: 'उपलब्धता',
+                rating: 'रेटिंग',
+                aiAssistant: 'AI स्वास्थ्य सहायक',
+                aiSub: 'स्वास्थ्य के बारे में कुछ भी पूछें',
+                typeMessage: 'अपना संदेश टाइप करें...',
+                send: 'भेजें',
+                voice: 'वॉयस',
+                clear: 'साफ़ करें',
+                startChat: 'AI सहायक के साथ बातचीत शुरू करें',
+                chatExample: 'प्रयास करें: "मरीज़ जॉन डो जोड़ें"',
+                showPatients: '👤 मरीज़ दिखाएं',
+                showAppointments: '📅 अपॉइंटमेंट दिखाएं',
+                showDoctors: '👨‍⚕️ डॉक्टर दिखाएं',
+                addPatientExample: '➕ मरीज़ जोड़ें',
+                bookExample: '📋 अपॉइंटमेंट बुक करें',
+                addSuccess: 'सफलतापूर्वक जोड़ा गया!',
+                deleteSuccess: 'सफलतापूर्वक हटाया गया!',
+                updateSuccess: 'सफलतापूर्वक अपडेट किया गया!',
+                confirmDelete: 'क्या आप इसे हटाना चाहते हैं?',
+                noPatients: 'कोई मरीज़ नहीं मिला',
+                noAppointments: 'कोई अपॉइंटमेंट नहीं मिला',
+                noDoctors: 'कोई डॉक्टर नहीं मिला',
+                welcomeUser: 'स्वागत है',
+                loginSuccess: 'लॉगिन सफल!',
+                loginFailed: 'अमान्य उपयोगकर्ता नाम या पासवर्ड!',
+                logoutSuccess: 'सफलतापूर्वक लॉग आउट!',
+            },
+            te: {
+                appTitle: 'AI ఆరోగ్య సంరక్షణ',
+                appSubtitle: 'సురక్షిత ఆరోగ్య వ్యవస్థ',
+                loginSubtitle: 'ఆరోగ్య వ్యవస్థలో సురక్షిత లాగిన్',
+                navHome: 'హోమ్',
+                navDashboard: 'డాష్బోర్డ్',
+                navPatients: 'రోగులు',
+                navAppointments: 'అపాయింట్మెంట్లు',
+                navDoctors: 'వైద్యులు',
+                navChatbot: '💬 AI చాట్',
+                navAskAI: '💬 AI ని అడగండి',
+                footer: '© 2024 · మెరుగైన ఆరోగ్యం కోసం ❤️ తో',
+                heroTitle: 'AI-ఆధారిత ఆరోగ్య నిర్వహణ',
+                heroSubtitle: 'AI సహాయంతో స్మార్ట్ ఆరోగ్య నిర్వహణ.',
+                heroChat: '💬 AI తో చాట్ చేయండి',
+                heroPatients: '📋 రోగులను నిర్వహించండి',
+                heroVoice: '🎤 వాయిస్ కమాండ్',
+                totalPatients: 'మొత్తం రోగులు',
+                appointments: 'అపాయింట్మెంట్లు',
+                activeDoctors: 'యాక్టివ్ వైద్యులు',
+                aiConversations: 'AI సంభాషణలు',
+                featureAI: 'AI సహాయకుడు',
+                featureAIDesc: 'ఆరోగ్య ప్రశ్నలకు స్మార్ట్ AI చాట్బాట్.',
+                featureVoice: 'వాయిస్ కమాండ్లు',
+                featureVoiceDesc: 'ప్రతిదీ నిర్వహించడానికి మీ వాయిస్ ఉపయోగించండి.',
+                featureAnalytics: 'స్మార్ట్ విశ్లేషణలు',
+                featureAnalyticsDesc: 'మెరుగైన నిర్ణయాల కోసం నిజ-సమయ అంతర్దృష్టులు.',
+                dashboard: 'డాష్బోర్డ్',
+                dashboardSub: 'నిజ-సమయ ఆరోగ్య అంతర్దృష్టులు',
+                quickAddPatient: 'కొత్త రోగిని జోడించండి',
+                quickBookAppointment: 'అపాయింట్మెంట్ బుక్ చేయండి',
+                quickAddDoctor: 'వైద్యుడిని జోడించండి',
+                recentActivity: 'ఇటీవలి కార్యకలాపాలు',
+                addPatient: 'రోగిని జోడించండి',
+                bookAppointment: 'అపాయింట్మెంట్ బుక్ చేయండి',
+                addDoctor: 'వైద్యుడిని జోడించండి',
+                search: 'శోధన',
+                actions: 'చర్యలు',
+                status: 'స్థితి',
+                name: 'పేరు',
+                age: 'వయస్సు',
+                gender: 'లింగం',
+                condition: 'పరిస్థితి',
+                phone: 'ఫోన్',
+                edit: 'సవరించు',
+                delete: 'తొలగించు',
+                patient: 'రోగి',
+                doctor: 'వైద్యుడు',
+                date: 'తేదీ',
+                time: 'సమయం',
+                specialization: 'ప్రత్యేకత',
+                experience: 'అనుభవం',
+                availability: 'లభ్యత',
+                rating: 'రేటింగ్',
+                aiAssistant: 'AI ఆరోగ్య సహాయకుడు',
+                aiSub: 'ఆరోగ్యం గురించి ఏదైనా అడగండి',
+                typeMessage: 'మీ సందేశాన్ని టైప్ చేయండి...',
+                send: 'పంపు',
+                voice: 'వాయిస్',
+                clear: 'క్లియర్',
+                startChat: 'AI సహాయకుడితో సంభాషణ ప్రారంభించండి',
+                chatExample: 'ప్రయత్నించండి: "రోగి జాన్ డోను జోడించండి"',
+                showPatients: '👤 రోగులను చూపించు',
+                showAppointments: '📅 అపాయింట్మెంట్లను చూపించు',
+                showDoctors: '👨‍⚕️ వైద్యులను చూపించు',
+                addPatientExample: '➕ రోగిని జోడించండి',
+                bookExample: '📋 అపాయింట్మెంట్ బుక్ చేయండి',
+                addSuccess: 'విజయవంతంగా జోడించబడింది!',
+                deleteSuccess: 'విజయవంతంగా తొలగించబడింది!',
+                updateSuccess: 'విజయవంతంగా నవీకరించబడింది!',
+                confirmDelete: 'దీన్ని తొలగించాలనుకుంటున్నారా?',
+                noPatients: 'రోగులు ఎవరూ కనుగొనబడలేదు',
+                noAppointments: 'అపాయింట్మెంట్లు ఏవీ కనుగొనబడలేదు',
+                noDoctors: 'వైద్యులు ఎవరూ కనుగొనబడలేదు',
+                welcomeUser: 'స్వాగతం',
+                loginSuccess: 'లాగిన్ విజయవంతమైంది!',
+                loginFailed: 'తప్పు వినియోగదారు పేరు లేదా పాస్వర్డ్!',
+                logoutSuccess: 'విజయవంతంగా లాగ్ అవుట్ చేయబడింది!',
+            },
+            kn: {
+                appTitle: 'AI ಆರೋಗ್ಯ ಸೇವೆ',
+                appSubtitle: 'ಸುರಕ್ಷಿತ ಆರೋಗ್ಯ ವ್ಯವಸ್ಥೆ',
+                loginSubtitle: 'ಆರೋಗ್ಯ ವ್ಯವಸ್ಥೆಯಲ್ಲಿ ಸುರಕ್ಷಿತ ಲಾಗಿನ್',
+                navHome: 'ಮುಖಪುಟ',
+                navDashboard: 'ಡ್ಯಾಶ್ಬೋರ್ಡ್',
+                navPatients: 'ರೋಗಿಗಳು',
+                navAppointments: 'ನೇಮಕಾತಿಗಳು',
+                navDoctors: 'ವೈದ್ಯರು',
+                navChatbot: '💬 AI ಚಾಟ್',
+                navAskAI: '💬 AI ಕೇಳಿ',
+                footer: '© 2024 · ಉತ್ತಮ ಆರೋಗ್ಯಕ್ಕಾಗಿ ❤️ ನೊಂದಿಗೆ',
+                heroTitle: 'AI-ಚಾಲಿತ ಆರೋಗ್ಯ ನಿರ್ವಹಣೆ',
+                heroSubtitle: 'AI ಸಹಾಯದೊಂದಿಗೆ ಸ್ಮಾರ್ಟ್ ಆರೋಗ್ಯ ನಿರ್ವಹಣೆ.',
+                heroChat: '💬 AI ಜೊತೆ ಚಾಟ್ ಮಾಡಿ',
+                heroPatients: '📋 ರೋಗಿಗಳನ್ನು ನಿರ್ವಹಿಸಿ',
+                heroVoice: '🎤 ಧ್ವನಿ ಆಜ್ಞೆ',
+                totalPatients: 'ಒಟ್ಟು ರೋಗಿಗಳು',
+                appointments: 'ನೇಮಕಾತಿಗಳು',
+                activeDoctors: 'ಸಕ್ರಿಯ ವೈದ್ಯರು',
+                aiConversations: 'AI ಸಂಭಾಷಣೆಗಳು',
+                featureAI: 'AI ಸಹಾಯಕ',
+                featureAIDesc: 'ಆರೋಗ್ಯ ಪ್ರಶ್ನೆಗಳಿಗೆ ಸ್ಮಾರ್ಟ್ AI ಚಾಟ್ಬಾಟ್.',
+                featureVoice: 'ಧ್ವನಿ ಆಜ್ಞೆಗಳು',
+                featureVoiceDesc: 'ಎಲ್ಲವನ್ನೂ ನಿರ್ವಹಿಸಲು ನಿಮ್ಮ ಧ್ವನಿಯನ್ನು ಬಳಸಿ.',
+                featureAnalytics: 'ಸ್ಮಾರ್ಟ್ ವಿಶ್ಲೇಷಣೆ',
+                featureAnalyticsDesc: 'ಉತ್ತಮ ನಿರ್ಧಾರಗಳಿಗಾಗಿ ನೈಜ-ಸಮಯದ ಒಳನೋಟಗಳು.',
+                dashboard: 'ಡ್ಯಾಶ್ಬೋರ್ಡ್',
+                dashboardSub: 'ನೈಜ-ಸಮಯದ ಆರೋಗ್ಯ ಒಳನೋಟಗಳು',
+                quickAddPatient: 'ಹೊಸ ರೋಗಿಯನ್ನು ಸೇರಿಸಿ',
+                quickBookAppointment: 'ನೇಮಕಾತಿ ಬುಕ್ ಮಾಡಿ',
+                quickAddDoctor: 'ವೈದ್ಯರನ್ನು ಸೇರಿಸಿ',
+                recentActivity: 'ಇತ್ತೀಚಿನ ಚಟುವಟಿಕೆಗಳು',
+                addPatient: 'ರೋಗಿಯನ್ನು ಸೇರಿಸಿ',
+                bookAppointment: 'ನೇಮಕಾತಿ ಬುಕ್ ಮಾಡಿ',
+                addDoctor: 'ವೈದ್ಯರನ್ನು ಸೇರಿಸಿ',
+                search: 'ಹುಡುಕಿ',
+                actions: 'ಕ್ರಿಯೆಗಳು',
+                status: 'ಸ್ಥಿತಿ',
+                name: 'ಹೆಸರು',
+                age: 'ವಯಸ್ಸು',
+                gender: 'ಲಿಂಗ',
+                condition: 'ಸ್ಥಿತಿ',
+                phone: 'ಫೋನ್',
+                edit: 'ಸಂಪಾದಿಸಿ',
+                delete: 'ಅಳಿಸಿ',
+                patient: 'ರೋಗಿ',
+                doctor: 'ವೈದ್ಯ',
+                date: 'ದಿನಾಂಕ',
+                time: 'ಸಮಯ',
+                specialization: 'ವಿಶೇಷತೆ',
+                experience: 'ಅನುಭವ',
+                availability: 'ಲಭ್ಯತೆ',
+                rating: 'ರೇಟಿಂಗ್',
+                aiAssistant: 'AI ಆರೋಗ್ಯ ಸಹಾಯಕ',
+                aiSub: 'ಆರೋಗ್ಯದ ಬಗ್ಗೆ ಏನನ್ನಾದರೂ ಕೇಳಿ',
+                typeMessage: 'ನಿಮ್ಮ ಸಂದೇಶವನ್ನು ಟೈಪ್ ಮಾಡಿ...',
+                send: 'ಕಳುಹಿಸಿ',
+                voice: 'ಧ್ವನಿ',
+                clear: 'ಅಳಿಸಿ',
+                startChat: 'AI ಸಹಾಯಕರೊಂದಿಗೆ ಸಂಭಾಷಣೆ ಪ್ರಾರಂಭಿಸಿ',
+                chatExample: 'ಪ್ರಯತ್ನಿಸಿ: "ರೋಗಿ ಜಾನ್ ಡೋ ಸೇರಿಸಿ"',
+                showPatients: '👤 ರೋಗಿಗಳನ್ನು ತೋರಿಸು',
+                showAppointments: '📅 ನೇಮಕಾತಿಗಳನ್ನು ತೋರಿಸು',
+                showDoctors: '👨‍⚕️ ವೈದ್ಯರನ್ನು ತೋರಿಸು',
+                addPatientExample: '➕ ರೋಗಿಯನ್ನು ಸೇರಿಸಿ',
+                bookExample: '📋 ನೇಮಕಾತಿ ಬುಕ್ ಮಾಡಿ',
+                addSuccess: 'ಯಶಸ್ವಿಯಾಗಿ ಸೇರಿಸಲಾಗಿದೆ!',
+                deleteSuccess: 'ಯಶಸ್ವಿಯಾಗಿ ಅಳಿಸಲಾಗಿದೆ!',
+                updateSuccess: 'ಯಶಸ್ವಿಯಾಗಿ ನವೀಕರಿಸಲಾಗಿದೆ!',
+                confirmDelete: 'ಇದನ್ನು ಅಳಿಸಲು ಬಯಸುವಿರಾ?',
+                noPatients: 'ರೋಗಿಗಳು ಕಂಡುಬಂದಿಲ್ಲ',
+                noAppointments: 'ನೇಮಕಾತಿಗಳು ಕಂಡುಬಂದಿಲ್ಲ',
+                noDoctors: 'ವೈದ್ಯರು ಕಂಡುಬಂದಿಲ್ಲ',
+                welcomeUser: 'ಸ್ವಾಗತ',
+                loginSuccess: 'ಲಾಗಿನ್ ಯಶಸ್ವಿಯಾಯಿತು!',
+                loginFailed: 'ಅಮಾನ್ಯ ಬಳಕೆದಾರಹೆಸರು ಅಥವಾ ಪಾಸ್ವರ್ಡ್!',
+                logoutSuccess: 'ಯಶಸ್ವಿಯಾಗಿ ಲಾಗ್ ಔಟ್ ಮಾಡಲಾಗಿದೆ!',
+            }
+        };
+
+        let currentLang = 'en';
+        let isLoggedIn = false;
+        let currentUser = null;
+
+        // ============================================================
+        // USER CREDENTIALS (Hardcoded for demo)
+        // ============================================================
+        const users = [
+            { username: 'admin', password: 'admin123', name: 'Admin', role: 'Administrator' },
+            { username: 'doctor', password: 'doctor123', name: 'Dr. Smith', role: 'Doctor' },
+            { username: 'nurse', password: 'nurse123', name: 'Nurse Johnson', role: 'Nurse' },
+            { username: 'receptionist', password: 'reception123', name: 'Receptionist', role: 'Receptionist' },
+        ];
+
+        function t(key) {
+            return translations[currentLang]?.[key] || translations.en[key] || key;
+        }
+
+        // ============================================================
+        // LANGUAGE SWITCHER
+        // ============================================================
+        function setLanguage(lang) {
+            currentLang = lang;
+            
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) {
+                    btn.classList.add('active');
+                }
+            });
+
+            updateUItexts();
+            
+            if (isLoggedIn) {
+                updateUI();
+            }
+            
+            showToast(`🌐 Language changed to ${lang.toUpperCase()}`, 'info');
+        }
+
+        function updateUItexts() {
+            document.getElementById('appTitle').textContent = t('appTitle');
+            document.getElementById('appSubtitle').textContent = t('appSubtitle');
+            document.getElementById('loginSubtitle').textContent = t('loginSubtitle');
+            document.getElementById('navHome').textContent = t('navHome');
+            document.getElementById('navDashboard').textContent = t('navDashboard');
+            document.getElementById('navPatients').textContent = t('navPatients');
+            document.getElementById('navAppointments').textContent = t('navAppointments');
+            document.getElementById('navDoctors').textContent = t('navDoctors');
+            document.getElementById('navChatbot').textContent = t('navChatbot');
+            document.getElementById('navAskAI').textContent = t('navAskAI');
+            document.getElementById('mNavHome').textContent = t('navHome');
+            document.getElementById('mNavDashboard').textContent = t('navDashboard');
+            document.getElementById('mNavPatients').textContent = t('navPatients');
+            document.getElementById('mNavAppointments').textContent = t('navAppointments');
+            document.getElementById('mNavDoctors').textContent = t('navDoctors');
+            document.getElementById('mNavChatbot').textContent = t('navChatbot');
+            document.getElementById('footerText').textContent = t('footer');
+        }
+
+        // ============================================================
+        // LOGIN / LOGOUT
+        // ============================================================
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const btn = document.getElementById('loginBtn');
+            
+            btn.textContent = '⏳ Checking...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                const user = users.find(u => u.username === username && u.password === password);
+                
+                if (user) {
+                    currentUser = user;
+                    isLoggedIn = true;
+                    
+                    document.getElementById('loginPage').style.display = 'none';
+                    document.getElementById('mainApp').style.display = 'block';
+                    document.getElementById('userAvatar').textContent = user.name.charAt(0).toUpperCase();
+                    document.getElementById('userNameDisplay').textContent = user.name;
+                    
+                    showToast(`✅ ${t('loginSuccess')} ${t('welcomeUser')}, ${user.name}!`, 'success');
+                    
+                    updateUItexts();
+                    navigate('home');
+                } else {
+                    document.getElementById('loginForm').classList.add('animate-shake');
+                    setTimeout(() => {
+                        document.getElementById('loginForm').classList.remove('animate-shake');
+                    }, 500);
+                    showToast(`❌ ${t('loginFailed')}`, 'error');
+                }
+                
+                btn.textContent = '🚀 Sign In';
+                btn.disabled = false;
+            }, 800);
+        }
+
+        function handleLogout() {
+            if (confirm('Are you sure you want to logout?')) {
+                isLoggedIn = false;
+                currentUser = null;
+                
+                document.getElementById('mainApp').style.display = 'none';
+                document.getElementById('loginPage').style.display = 'flex';
+                document.getElementById('username').value = '';
+                document.getElementById('password').value = '';
+                
+                showToast(`✅ ${t('logoutSuccess')}`, 'info');
+            }
+        }
+
+        // ============================================================
+        // DATA STORE
+        // ============================================================
+        let patients = [
+            { id: 1, name: 'John Smith', age: 45, gender: 'Male', condition: 'Hypertension', phone: '+1 234-567-8901', status: 'Active' },
+            { id: 2, name: 'Sarah Johnson', age: 32, gender: 'Female', condition: 'Diabetes Type 2', phone: '+1 234-567-8902', status: 'Active' },
+            { id: 3, name: 'Mike Wilson', age: 58, gender: 'Male', condition: 'Arthritis', phone: '+1 234-567-8903', status: 'Inactive' },
+            { id: 4, name: 'Emily Davis', age: 28, gender: 'Female', condition: 'Migraine', phone: '+1 234-567-8904', status: 'Active' },
+            { id: 5, name: 'Robert Brown', age: 67, gender: 'Male', condition: 'Heart Disease', phone: '+1 234-567-8905', status: 'Critical' },
+        ];
+
+        let appointments = [
+            { id: 1, patient: 'John Smith', doctor: 'Dr. Williams', date: '2024-01-20', time: '10:00 AM', status: 'Confirmed' },
+            { id: 2, patient: 'Sarah Johnson', doctor: 'Dr. Brown', date: '2024-01-20', time: '11:30 AM', status: 'Pending' },
+            { id: 3, patient: 'Mike Wilson', doctor: 'Dr. Davis', date: '2024-01-21', time: '2:00 PM', status: 'Completed' },
+            { id: 4, patient: 'Emily Davis', doctor: 'Dr. Smith', date: '2024-01-21', time: '4:30 PM', status: 'Cancelled' },
+        ];
+
+        let doctors = [
+            { id: 1, name: 'Dr. Williams', specialization: 'Cardiology', experience: '15 years', rating: 4.8, availability: 'Available', phone: '+1 234-567-8901' },
+            { id: 2, name: 'Dr. Brown', specialization: 'Neurology', experience: '12 years', rating: 4.9, availability: 'Busy', phone: '+1 234-567-8902' },
+            { id: 3, name: 'Dr. Davis', specialization: 'Pediatrics', experience: '10 years', rating: 4.7, availability: 'Available', phone: '+1 234-567-8903' },
+            { id: 4, name: 'Dr. Smith', specialization: 'Orthopedics', experience: '18 years', rating: 4.6, availability: 'Unavailable', phone: '+1 234-567-8904' },
+            { id: 5, name: 'Dr. Patel', specialization: 'Dermatology', experience: '8 years', rating: 4.9, availability: 'Available', phone: '+1 234-567-8905' },
+        ];
+
+        let chatHistory = [];
+        let currentPage = 'home';
+        let editingItem = null;
+        let editingType = null;
+
+        // ============================================================
+        // TOAST NOTIFICATIONS
+        // ============================================================
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.textContent = message;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100px)';
+                toast.style.transition = 'all 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // ============================================================
+        // NAVIGATION
+        // ============================================================
+        function navigate(page) {
+            currentPage = page;
+            document.querySelectorAll('[data-page]').forEach(el => {
+                el.classList.remove('active');
+                if (el.dataset.page === page) el.classList.add('active');
+            });
+            document.getElementById('mobileMenu')?.classList.add('hidden');
+
+            const content = document.getElementById('pageContent');
+            switch (page) {
+                case 'home': content.innerHTML = renderHome(); break;
+                case 'dashboard': content.innerHTML = renderDashboard(); break;
+                case 'patients': content.innerHTML = renderPatients(); break;
+                case 'appointments': content.innerHTML = renderAppointments(); break;
+                case 'doctors': content.innerHTML = renderDoctors(); break;
+                case 'chatbot': content.innerHTML = renderChatbot(); break;
+                default: content.innerHTML = renderHome();
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleMobile() {
+            document.getElementById('mobileMenu').classList.toggle('hidden');
+        }
+
+        // ============================================================
+        // RENDER FUNCTIONS (Same as before with translations)
+        // ============================================================
+        function renderHome() {
+            return `
+                <div class="animate-slide">
+                    <div class="text-center py-12 md:py-20">
+                        <div class="text-7xl md:text-8xl mb-6 animate-float">🔐</div>
+                        <h1 class="text-4xl md:text-7xl font-bold mb-6">
+                            <span class="shimmer-text">${t('heroTitle')}</span>
+                        </h1>
+                        <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-10">
+                            ${t('heroSubtitle')}
+                        </p>
+                        <div class="flex flex-wrap justify-center gap-4">
+                            <button onclick="navigate('chatbot')" class="px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full font-semibold hover:scale-105 transition shadow-lg shadow-indigo-500/25">
+                                ${t('heroChat')}
+                            </button>
+                            <button onclick="navigate('patients')" class="px-6 md:px-8 py-3 md:py-4 glass hover:scale-105 transition font-semibold">
+                                ${t('heroPatients')}
+                            </button>
+                            <button onclick="startVoiceCommand()" class="px-6 md:px-8 py-3 md:py-4 glass hover:scale-105 transition font-semibold border border-purple-500/30">
+                                ${t('heroVoice')}
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-12">
+                        <div class="glass p-4 md:p-6 text-center card-hover">
+                            <div class="text-3xl md:text-4xl mb-2">👤</div>
+                            <p class="text-xl md:text-2xl font-bold">${patients.length}</p>
+                            <p class="text-gray-400 text-sm">${t('totalPatients')}</p>
+                        </div>
+                        <div class="glass p-4 md:p-6 text-center card-hover">
+                            <div class="text-3xl md:text-4xl mb-2">📅</div>
+                            <p class="text-xl md:text-2xl font-bold">${appointments.length}</p>
+                            <p class="text-gray-400 text-sm">${t('appointments')}</p>
+                        </div>
+                        <div class="glass p-4 md:p-6 text-center card-hover">
+                            <div class="text-3xl md:text-4xl mb-2">👨‍⚕️</div>
+                            <p class="text-xl md:text-2xl font-bold">${doctors.length}</p>
+                            <p class="text-gray-400 text-sm">${t('activeDoctors')}</p>
+                        </div>
+                        <div class="glass p-4 md:p-6 text-center card-hover">
+                            <div class="text-3xl md:text-4xl mb-2">💬</div>
+                            <p class="text-xl md:text-2xl font-bold">${chatHistory.length}</p>
+                            <p class="text-gray-400 text-sm">${t('aiConversations')}</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="glass p-6 md:p-8 card-hover">
+                            <div class="text-4xl md:text-5xl mb-4">🧠</div>
+                            <h3 class="text-lg md:text-xl font-semibold mb-2">${t('featureAI')}</h3>
+                            <p class="text-gray-300 text-sm md:text-base">${t('featureAIDesc')}</p>
+                        </div>
+                        <div class="glass p-6 md:p-8 card-hover">
+                            <div class="text-4xl md:text-5xl mb-4">🎤</div>
+                            <h3 class="text-lg md:text-xl font-semibold mb-2">${t('featureVoice')}</h3>
+                            <p class="text-gray-300 text-sm md:text-base">${t('featureVoiceDesc')}</p>
+                        </div>
+                        <div class="glass p-6 md:p-8 card-hover">
+                            <div class="text-4xl md:text-5xl mb-4">📊</div>
+                            <h3 class="text-lg md:text-xl font-semibold mb-2">${t('featureAnalytics')}</h3>
+                            <p class="text-gray-300 text-sm md:text-base">${t('featureAnalyticsDesc')}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ============================================================
+        // DASHBOARD, PATIENTS, APPOINTMENTS, DOCTORS, CHATBOT
+        // (Same as previous version with translations)
+        // ============================================================
+        function renderDashboard() {
+            const totalPatients = patients.length;
+            const activePatients = patients.filter(p => p.status === 'Active').length;
+            const criticalPatients = patients.filter(p => p.status === 'Critical').length;
+            const totalAppointments = appointments.length;
+            const confirmedAppointments = appointments.filter(a => a.status === 'Confirmed').length;
+            const totalDoctors = doctors.length;
+            const availableDoctors = doctors.filter(d => d.availability === 'Available').length;
+
+            return `
+                <div class="animate-slide">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+                        <div>
+                            <h1 class="text-3xl md:text-4xl font-bold shimmer-text">${t('dashboard')}</h1>
+                            <p class="text-gray-300">${t('dashboardSub')}</p>
+                        </div>
+                        <div class="flex gap-3">
+                            <button onclick="navigate('chatbot')" class="px-4 py-2 glass rounded-lg hover:scale-105 transition">
+                                💬 ${t('navAskAI')}
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                        <div class="glass p-4 md:p-6 card-hover">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <p class="text-gray-400 text-xs md:text-sm">${t('totalPatients')}</p>
+                                    <p class="text-2xl md:text-3xl font-bold">${totalPatients}</p>
+                                </div>
+                                <span class="text-2xl md:text-3xl">👤</span>
+                            </div>
+                            <div class="flex gap-2 mt-2 text-xs">
+                                <span class="text-green-400">🟢 ${activePatients} Active</span>
+                                <span class="text-red-400">🔴 ${criticalPatients} Critical</span>
+                            </div>
+                        </div>
+                        <div class="glass p-4 md:p-6 card-hover">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <p class="text-gray-400 text-xs md:text-sm">${t('appointments')}</p>
+                                    <p class="text-2xl md:text-3xl font-bold">${totalAppointments}</p>
+                                </div>
+                                <span class="text-2xl md:text-3xl">📅</span>
+                            </div>
+                            <p class="text-xs text-green-400 mt-2">✅ ${confirmedAppointments} Confirmed</p>
+                        </div>
+                        <div class="glass p-4 md:p-6 card-hover">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <p class="text-gray-400 text-xs md:text-sm">${t('activeDoctors')}</p>
+                                    <p class="text-2xl md:text-3xl font-bold">${totalDoctors}</p>
+                                </div>
+                                <span class="text-2xl md:text-3xl">👨‍⚕️</span>
+                            </div>
+                            <p class="text-xs text-green-400 mt-2">🟢 ${availableDoctors} Available</p>
+                        </div>
+                        <div class="glass p-4 md:p-6 card-hover">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <p class="text-gray-400 text-xs md:text-sm">${t('aiConversations')}</p>
+                                    <p class="text-2xl md:text-3xl font-bold">${chatHistory.length}</p>
+                                </div>
+                                <span class="text-2xl md:text-3xl">💬</span>
+                            </div>
+                            <p class="text-xs text-purple-400 mt-2">🧠 Smart Conversations</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                        <button onclick="openAddModal('patient')" class="glass p-4 md:p-6 card-hover text-left">
+                            <div class="text-2xl mb-2">➕</div>
+                            <h3 class="font-semibold">${t('quickAddPatient')}</h3>
+                            <p class="text-gray-400 text-sm">Register a new patient record</p>
+                        </button>
+                        <button onclick="openAddModal('appointment')" class="glass p-4 md:p-6 card-hover text-left">
+                            <div class="text-2xl mb-2">📋</div>
+                            <h3 class="font-semibold">${t('quickBookAppointment')}</h3>
+                            <p class="text-gray-400 text-sm">Schedule a new appointment</p>
+                        </button>
+                        <button onclick="openAddModal('doctor')" class="glass p-4 md:p-6 card-hover text-left">
+                            <div class="text-2xl mb-2">👨‍⚕️</div>
+                            <h3 class="font-semibold">${t('quickAddDoctor')}</h3>
+                            <p class="text-gray-400 text-sm">Register a new doctor</p>
+                        </button>
+                    </div>
+
+                    <div class="glass p-4 md:p-6">
+                        <h3 class="text-lg font-semibold mb-4">📊 ${t('recentActivity')}</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center gap-4 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition">
+                                <span class="text-2xl">👤</span>
+                                <div class="flex-1">
+                                    <p>Patient added: John Smith</p>
+                                    <p class="text-gray-400 text-sm">Just now</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition">
+                                <span class="text-2xl">📅</span>
+                                <div class="flex-1">
+                                    <p>Appointment: Sarah Johnson with Dr. Brown</p>
+                                    <p class="text-gray-400 text-sm">1 hour ago</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition">
+                                <span class="text-2xl">👨‍⚕️</span>
+                                <div class="flex-1">
+                                    <p>Doctor Dr. Patel is Available</p>
+                                    <p class="text-gray-400 text-sm">2 hours ago</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderPatients() {
+            return `
+                <div class="animate-slide">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+                        <div>
+                            <h1 class="text-3xl md:text-4xl font-bold shimmer-text">${t('navPatients')}</h1>
+                            <p class="text-gray-300">Manage patient records</p>
+                        </div>
+                        <div class="flex gap-3 flex-wrap">
+                            <input type="text" id="patientSearch" placeholder="🔍 ${t('search')}..." 
+                                class="px-4 py-2 rounded-lg glass input-focus text-white placeholder-gray-400 text-sm md:text-base" 
+                                oninput="filterTable('patients', this.value)" />
+                            <button onclick="openAddModal('patient')" class="px-4 md:px-6 py-2 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg font-semibold hover:scale-105 transition text-sm md:text-base">
+                                ➕ ${t('addPatient')}
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="glass overflow-hidden">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm md:text-base">
+                                <thead class="border-b border-white/10">
+                                    <tr>
+                                        <th class="px-3 md:px-6 py-3 md:py-4 text-left text-xs font-medium text-gray-400 uppercase">${t('name')}</th>
+                                        <th class="px-3 md:px-6 py-3 md:py-4 text-left text-xs font-medium text-gray-400 uppercase">${t('age')}</th>
+                                        <th class="px-3 md:px-6 py-3 md:py-4 text-left text-xs font-medium text-gray-400 uppercase">${t('gender')}</th>
+                                        <th class="px-3 md:px-6 py-3 md:py-4 text-left text-xs font-medium text-gray-400 uppercase">${t('condition')}</th>
+                                        <th class="px-3 md:px-6 py-3 md:py-4 text-left text-xs font-medium text-gray-400 uppercase hidden md:table-cell">${t('phone')}</th>
+                                        <th class="px-3 md:px-6 py-3 md:py-4 text-left text-xs font-medium text-gray-400 uppercase">${t('status')}</th>
+                                        <th class="px-3 md:px-6 py-3 md:py-4 text-left text-xs font-medium text-gray-400 uppercase">${t('actions')}</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="patientsTableBody">
+                                    ${patients.length === 0 ? `
+                                        <tr>
+                                            <td colspan="7" class="text-center py-8 text-gray-400">${t('noPatients')}</td>
+                                        </tr>
+                                    ` : patients.map(p => `
+                                        <tr class="border-b border-white/5 hover:bg-white/5 transition">
+                                            <td class="px-3 md:px-6 py-3 md:py-4 font-medium">${p.name}</td>
+                                            <td class="px-3 md:px-6 py-3 md:py-4">${p.age}</td>
+                                            <td class="px-3 md:px-6 py-3 md:py-4">${p.gender}</td>
+                                            <td class="px-3 md:px-6 py-3 md:py-4">${p.condition}</td>
+                                            <td class="px-3 md:px-6 py-3 md:py-4 hidden md:table-cell text-sm">${p.phone}</td>
+                                            <td class="px-3 md:px-6 py-3 md:py-4">
+                                                <span class="px-2 py-1 rounded-full text-xs font-medium
+                                                    ${p.status === 'Active' ? 'bg-green-500/20 text-green-400' :
+                                                      p.status === 'Critical' ? 'bg-red-500/20 text-red-400' :
+                                                      'bg-gray-500/20 text-gray-400'}">
+                                                    ${p.status}
+                                                </span>
+                                            </td>
+                                            <td class="px-3 md:px-6 py-3 md:py-4">
+                                                <button onclick="openEditModal('patient', ${p.id})" class="text-indigo-400 hover:text-indigo-300 mr-2">✏️</button>
+                                                <button onclick="deleteItem('patient', ${p.id})" class="text-red-400 hover:text-red-300">🗑️</button>
+                                            </td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderAppointments() {
+            return `
+                <div class="animate-slide">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+                        <div>
+                            <h1 class="text-3xl md:text-4xl font-bold shimmer-text">${t('navAppointments')}</h1>
+                            <p class="text-gray-300">Manage appointments</p>
+                        </div>
+                        <div class="flex gap-3 flex-wrap">
+                            <input type="text" id="appointmentSearch" placeholder="🔍 ${t('search')}..." 
+                                class="px-4 py-2 rounded-lg glass input-focus text-white placeholder-gray-400 text-sm md:text-base" 
+                                oninput="filterTable('appointments', this.value)" />
+                            <button onclick="openAddModal('appointment')" class="px-4 md:px-6 py-2 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg font-semibold hover:scale-105 transition text-sm md:text-base">
+                                ➕ ${t('bookAppointment')}
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6" id="appointmentsContainer">
+                        ${appointments.length === 0 ? `
+                            <div class="col-span-2 text-center py-8 text-gray-400">${t('noAppointments')}</div>
+                        ` : appointments.map(a => `
+                            <div class="glass p-4 md:p-6 card-hover">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h3 class="text-base md:text-lg font-semibold">${a.patient}</h3>
+                                        <p class="text-gray-300 text-sm md:text-base">${a.doctor}</p>
+                                    </div>
+                                    <span class="px-2 py-1 rounded-full text-xs font-medium
+                                        ${a.status === 'Confirmed' ? 'bg-green-500/20 text-green-400' :
+                                          a.status === 'Pending' ? 'bg-yellow-500/20 text-yellow-400' :
+                                          a.status === 'Completed' ? 'bg-blue-500/20 text-blue-400' :
+                                          'bg-red-500/20 text-red-400'}">
+                                        ${a.status}
+                                    </span>
+                                </div>
+                                <div class="mt-4 flex justify-between text-sm text-gray-400">
+                                    <span>📅 ${a.date}</span>
+                                    <span>🕐 ${a.time}</span>
+                                </div>
+                                <div class="mt-4 flex gap-2">
+                                    <button onclick="openEditModal('appointment', ${a.id})" class="px-3 py-1 glass rounded text-sm hover:scale-105 transition">✏️ ${t('edit')}</button>
+                                    <button onclick="deleteItem('appointment', ${a.id})" class="px-3 py-1 glass rounded text-sm hover:scale-105 transition text-red-400">🗑️ ${t('delete')}</button>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderDoctors() {
+            return `
+                <div class="animate-slide">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+                        <div>
+                            <h1 class="text-3xl md:text-4xl font-bold shimmer-text">${t('navDoctors')}</h1>
+                            <p class="text-gray-300">Manage doctors</p>
+                        </div>
+                        <div class="flex gap-3 flex-wrap">
+                            <input type="text" id="doctorSearch" placeholder="🔍 ${t('search')}..." 
+                                class="px-4 py-2 rounded-lg glass input-focus text-white placeholder-gray-400 text-sm md:text-base" 
+                                oninput="filterTable('doctors', this.value)" />
+                            <button onclick="openAddModal('doctor')" class="px-4 md:px-6 py-2 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg font-semibold hover:scale-105 transition text-sm md:text-base">
+                                ➕ ${t('addDoctor')}
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6" id="doctorsContainer">
+                        ${doctors.length === 0 ? `
+                            <div class="col-span-3 text-center py-8 text-gray-400">${t('noDoctors')}</div>
+                        ` : doctors.map(d => `
+                            <div class="glass p-4 md:p-6 card-hover">
+                                <div class="text-center">
+                                    <div class="text-4xl md:text-6xl mb-3">👨‍⚕️</div>
+                                    <h3 class="text-base md:text-lg font-semibold">${d.name}</h3>
+                                    <p class="text-indigo-300 text-sm md:text-base">${d.specialization}</p>
+                                    <div class="flex justify-center items-center gap-2 mt-2">
+                                        <span class="text-yellow-400">⭐</span>
+                                        <span>${d.rating}</span>
+                                        <span class="text-gray-400">|</span>
+                                        <span class="text-gray-300 text-sm">${d.experience}</span>
+                                    </div>
+                                    <div class="mt-3">
+                                        <span class="px-2 py-1 rounded-full text-xs font-medium
+                                            ${d.availability === 'Available' ? 'bg-green-500/20 text-green-400' :
+                                              d.availability === 'Busy' ? 'bg-yellow-500/20 text-yellow-400' :
+                                              'bg-red-500/20 text-red-400'}">
+                                            ${d.availability}
+                                        </span>
+                                    </div>
+                                    <p class="text-gray-400 text-sm mt-2">📞 ${d.phone}</p>
+                                    <div class="mt-4 flex justify-center gap-2">
+                                        <button onclick="openEditModal('doctor', ${d.id})" class="px-3 py-1 glass rounded text-sm hover:scale-105 transition">✏️ ${t('edit')}</button>
+                                        <button onclick="deleteItem('doctor', ${d.id})" class="px-3 py-1 glass rounded text-sm hover:scale-105 transition text-red-400">🗑️ ${t('delete')}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderChatbot() {
+            return `
+                <div class="animate-slide max-w-4xl mx-auto">
+                    <div class="text-center mb-8">
+                        <div class="text-5xl md:text-6xl mb-4 animate-float">🧠</div>
+                        <h1 class="text-3xl md:text-4xl font-bold shimmer-text">${t('aiAssistant')}</h1>
+                        <p class="text-gray-300 text-sm md:text-base">${t('aiSub')}</p>
+                    </div>
+
+                    <div class="glass p-4 md:p-6">
+                        <div class="chat-container space-y-4 mb-4 max-h-[400px] overflow-y-auto" id="chatMessages">
+                            ${chatHistory.length === 0 ? `
+                                <div class="text-center text-gray-400 py-8 md:py-12">
+                                    <div class="text-4xl mb-4">💬</div>
+                                    <p>${t('startChat')}</p>
+                                    <p class="text-sm">${t('chatExample')}</p>
+                                </div>
+                            ` : chatHistory.map(msg => `
+                                <div class="flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}">
+                                    <div class="chat-message ${msg.type}">
+                                        ${msg.type === 'bot' ? '🤖 ' : ''}${msg.text}
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+
+                        <div class="flex gap-2 md:gap-3">
+                            <input type="text" id="chatInput" placeholder="${t('typeMessage')}" 
+                                class="flex-1 px-3 md:px-4 py-2 md:py-3 rounded-lg glass input-focus text-white placeholder-gray-400 text-sm md:text-base"
+                                onkeypress="if(event.key==='Enter') sendMessage()" />
+                            <button onclick="sendMessage()" class="px-4 md:px-6 py-2 md:py-3 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg hover:scale-105 transition text-sm md:text-base">
+                                ${t('send')}
+                            </button>
+                            <button onclick="toggleVoice()" id="voiceBtn" class="px-4 md:px-6 py-2 md:py-3 glass rounded-lg voice-btn hover:scale-105 transition text-sm md:text-base">
+                                🎤
+                            </button>
+                            <button onclick="clearChat()" class="px-3 md:px-4 py-2 md:py-3 glass rounded-lg hover:scale-105 transition text-red-400 text-sm md:text-base">
+                                🗑️
+                            </button>
+                        </div>
+                        
+                        <div id="voiceStatus" class="text-center text-sm text-gray-400 mt-3 hidden">
+                            🎤 Listening... Speak now
+                        </div>
+
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <button onclick="sendQuickMessage('Show all patients')" class="px-2 md:px-3 py-1 glass rounded-full text-xs md:text-sm hover:scale-105 transition">${t('showPatients')}</button>
+                            <button onclick="sendQuickMessage('Show all appointments')" class="px-2 md:px-3 py-1 glass rounded-full text-xs md:text-sm hover:scale-105 transition">${t('showAppointments')}</button>
+                            <button onclick="sendQuickMessage('Show all doctors')" class="px-2 md:px-3 py-1 glass rounded-full text-xs md:text-sm hover:scale-105 transition">${t('showDoctors')}</button>
+                            <button onclick="sendQuickMessage('Add patient John Doe, age 30, male, with flu')" class="px-2 md:px-3 py-1 glass rounded-full text-xs md:text-sm hover:scale-105 transition">${t('addPatientExample')}</button>
+                            <button onclick="sendQuickMessage('Book appointment for John Smith with Dr. Williams tomorrow at 10 AM')" class="px-2 md:px-3 py-1 glass rounded-full text-xs md:text-sm hover:scale-105 transition">${t('bookExample')}</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ============================================================
+        // MODAL FUNCTIONS (Same as previous)
+        // ============================================================
+        function openAddModal(type) {
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            modal.id = 'activeModal';
+            modal.onclick = (e) => { if (e.target === modal) closeModal(); };
+
+            let fields = '';
+            let title = '';
+
+            switch (type) {
+                case 'patient':
+                    title = t('addPatient');
+                    fields = `
+                        <div class="mb-4">
+                            <label class="block text-gray-300 text-sm mb-2">${t('name')}</label>
+                            <input id="modalName" class="w-full px-4 py-2 rounded-lg glass input-focus text-white" placeholder="John Doe" />
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="mb-4">
+                                <label class="block text-gray-300 text-sm mb-2">${t('age')}</label>
+                                <input id="modalAge" type="number" class="w-full px-4 py-2 rounded-lg glass input-focus text-white" placeholder="30" />
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-300 text-sm mb-2">${t('gender')}</label>
+                                <select id="modalGender" class="w-full px-4 py-2 rounded-lg glass input-focus text-white">
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-300 text-sm mb-2">${t('condition')}</label>
+                            <input id="modalCondition" class="w-full px-4 py-2 rounded-lg glass input-focus text-white" placeholder="General Checkup" />
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-300 text-sm mb-2">${t('phone')}</label>
+                            <input id="modalPhone" class="w-full px-4 py-2 rounded-lg glass input-focus text-white" placeholder="+1 234-567-8901" />
+                        </div>
+                    `;
+                    break;
+
+                case 'appointment':
+                    title = t('bookAppointment');
+                    fields = `
+                        <div class="mb-4">
+                            <label class="block text-gray-300 text-sm mb-2">${t('patient')}</label>
+                            <input id="modalPatient" class="w-full px-4 py-2 rounded-lg glass input-focus text-white" placeholder="John Smith" />
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-300 text-sm mb-2">${t('doctor')}</label>
+                            <input id="modalDoctor" class="w-full px-4 py-2 rounded-lg glass input-focus text-white" placeholder="Dr. Williams" />
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="mb-4">
+                                <label class="block text-gray-300 text-sm mb-2">${t('date')}</label>
+                                <input id="modalDate" type="date" class="w-full px-4 py-2 rounded-lg glass input-focus text-white" />
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-300 text-sm mb-2">${t('time')}</label>
+                                <input id="modalTime" class="w-full px-4 py-2 rounded-lg glass input-focus text-white" placeholder="10:00 AM" />
+                            </div>
+                        </div>
+                    `;
+                    break;
+
+                case 'doctor':
+                    title = t('addDoctor');
+                    fields = `
+                        <div class="mb-4">
+                            <label class="block text-gray-300 text-sm mb-2">${t('name')}</label>
+                            <input id="modalName" class="w-full px-4 py-2 rounded-lg glass input-focus text-white" placeholder="Dr. Smith" />
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-300 text-sm mb-2">${t('specialization')}</label>
+                            <input id="modalSpecialization" class="w-full px-4 py-2 rounded-lg glass input-focus text-white" placeholder="Cardiology" />
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="mb-4">
+                                <label class="block text-gray-300 text-sm mb-2">${t('experience')}</label>
+                                <input id="modalExperience" class="w-full px-4 py-2 rounded-lg glass input-focus text-white" placeholder="10 years" />
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-300 text-sm mb-2">${t('phone')}</label>
+                                <input id="modalPhone" class="w-full px-4 py-2 rounded-lg glass input-focus text-white" placeholder="+1 234-567-0000" />
+                            </div>
+                        </div>
+                    `;
+                    break;
+            }
+
+            modal.innerHTML = `
+                <div class="modal-content glass p-6 md:p-8" style="max-width:500px;width:90%;max-height:90vh;overflow-y:auto;animation:bounceIn 0.3s ease-out;">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-bold shimmer-text">${title}</h2>
+                        <button onclick="closeModal()" class="text-gray-400 hover:text-white text-2xl">✕</button>
+                    </div>
+                    ${fields}
+                    <button onclick="saveModal('${type}')" class="w-full py-3 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg font-semibold hover:scale-105 transition">
+                        ✅ ${t('addSuccess')}
+                    </button>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+        }
+
+        function openEditModal(type, id) {
+            let item;
+            let array;
+
+            switch (type) {
+                case 'patient': array = patients; break;
+                case 'appointment': array = appointments; break;
+                case 'doctor': array = doctors; break;
+            }
+
+            item = array.find(i => i.id === id);
+            if (!item) return;
+
+            editingItem = item;
+            editingType = type;
+
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            modal.id = 'activeModal';
+            modal.onclick = (e) => { if (e.target === modal) closeModal(); };
+
+            let fields = '';
+            let title = '';
+
+            switch (type) {
+                case 'patient':
+                    title = `${t('edit')} ${t('patient')}`;
+                    fields = `
+                        <div class="mb-4">
+                            <label class="block text-gray-300 text-sm mb-2">${t('name')}</label>
+                            <input id="modalName" value="${item.name}" class="w-full px-4 py-2 rounded-lg glass input-focus text-white" />
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="mb-4">
+                                <label class="block text-gray-300 text-sm mb-2">${t('age')}</label>
+                                <input id="modalAge" type="number" value="${item.age}" class="w-full px-4 py-2 rounded-lg glass input-focus text-white" />
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-300 text-sm mb-2">${t('gender')}</label>
+                                <select id="modalGender" class="w-full px-4 py-2 rounded-lg glass input-focus text-white">
+                                    <option value="Male" ${item.gender === 'Male' ? 'selected' : ''}>Male</option>
+                                    <option value="Female" ${item.gender === 'Female' ? 'selected' : ''}>Female</option>
+                                    <option value="Other" ${item.gender === 'Other' ? 'selected' : ''}>Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-300 text-sm mb-2">${t('condition')}</label>
+                            <input id="modalCondition" value="${item.condition}" class="w-full px-4 py-2 rounded-lg glass input-focus text-white" />
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-300 text-sm mb-2">${t('status')}</label>
+                            <select id="modalStatus" class="w-full px-4 py-2 rounded-lg glass input-focus text-white">
+                                <option value="Active" ${item.status === 'Active' ? 'selected' : ''}>Active</option>
+                                <option value="Inactive" ${item.status === 'Inactive' ? 'selected' : ''}>Inactive</option>
+                                <option value="Critical" ${item.status === 'Critical' ? 'selected' : ''}>Critical</option>
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-300 text-sm mb-2">${t('phone')}</label>
+                            <input id="modalPhone" value="${item.phone}" class="w-full px-4 py-2 rounded-lg glass input-focus text-white" />
+                        </div>
+                    `;
+                    break;
+
+                case 'appointment':
+                    title = `${t('edit')} ${t('appointment')}`;
+                    fields = `
+                        <div class="mb-4">
+                            <label class="block text-gray-300 text-sm mb-2">${t('patient')}</label>
+                            <input id="modalPatient" value="${item.patient}" class="w-full px-4 py-2 rounded-lg glass input-focus text-white" />
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-300 text-sm mb-2">${t('doctor')}</label>
+                            <input id="modalDoctor" value="${item.doctor}" class="w-full px-4 py-2 rounded-lg glass input-focus text-white" />
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="mb-4">
+                                <label class="block text-gray-300 text-sm mb-2">${t('date')}</label>
+                                <input id="modalDate" type="date" value="${item.date}" class="w-full px-4 py-2 rounded-lg glass input-focus text-white" />
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-300 text-sm mb-2">${t('time')}</label>
+                                <input id="modalTime" value="${item.time}" class="w-full px-4 py-2 rounded-lg glass input-focus text-white" />
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-300 text-sm mb-2">${t('status')}</label>
+                            <select id="modalStatus" class="w-full px-4 py-2 rounded-lg glass input-focus text-white">
+                                <option value="Confirmed" ${item.status === 'Confirmed' ? 'selected' : ''}>Confirmed</option>
+                                <option value="Pending" ${item.status === 'Pending' ? 'selected' : ''}>Pending</option>
+                                <option value="Completed" ${item.status === 'Completed' ? 'selected' : ''}>Completed</option>
+                                <option value="Cancelled" ${item.status === 'Cancelled' ? 'selected' : ''}>Cancelled</option>
+                            </select>
+                        </div>
+                    `;
+                    break;
+
+                case 'doctor':
+                    title = `${t('edit')} ${t('doctor')}`;
+                    fields = `
+                        <div class="mb-4">
+                            <label class="block text-gray-300 text-sm mb-2">${t('name')}</label>
+                            <input id="modalName" value="${item.name}" class="w-full px-4 py-2 rounded-lg glass input-focus text-white" />
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-300 text-sm mb-2">${t('specialization')}</label>
+                            <input id="modalSpecialization" value="${item.specialization}" class="w-full px-4 py-2 rounded-lg glass input-focus text-white" />
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="mb-4">
+                                <label class="block text-gray-300 text-sm mb-2">${t('experience')}</label>
+                                <input id="modalExperience" value="${item.experience}" class="w-full px-4 py-2 rounded-lg glass input-focus text-white" />
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-300 text-sm mb-2">${t('phone')}</label>
+                                <input id="modalPhone" value="${item.phone}" class="w-full px-4 py-2 rounded-lg glass input-focus text-white" />
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-300 text-sm mb-2">${t('availability')}</label>
+                            <select id="modalAvailability" class="w-full px-4 py-2 rounded-lg glass input-focus text-white">
+                                <option value="Available" ${item.availability === 'Available' ? 'selected' : ''}>Available</option>
+                                <option value="Busy" ${item.availability === 'Busy' ? 'selected' : ''}>Busy</option>
+                                <option value="Unavailable" ${item.availability === 'Unavailable' ? 'selected' : ''}>Unavailable</option>
+                            </select>
+                        </div>
+                    `;
+                    break;
+            }
+
+            modal.innerHTML = `
+                <div class="modal-content glass p-6 md:p-8" style="max-width:500px;width:90%;max-height:90vh;overflow-y:auto;animation:bounceIn 0.3s ease-out;">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-bold shimmer-text">${title}</h2>
+                        <button onclick="closeModal()" class="text-gray-400 hover:text-white text-2xl">✕</button>
+                    </div>
+                    ${fields}
+                    <button onclick="saveEditModal('${type}')" class="w-full py-3 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg font-semibold hover:scale-105 transition">
+                        ✅ ${t('updateSuccess')}
+                    </button>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('activeModal');
+            if (modal) modal.remove();
+            editingItem = null;
+            editingType = null;
+        }
+
+        function saveModal(type) {
+            switch (type) {
+                case 'patient': {
+                    const name = document.getElementById('modalName')?.value;
+                    const age = parseInt(document.getElementById('modalAge')?.value);
+                    const gender = document.getElementById('modalGender')?.value;
+                    const condition = document.getElementById('modalCondition')?.value;
+                    const phone = document.getElementById('modalPhone')?.value || '+1 234-567-0000';
+
+                    if (!name) { showToast('Please enter patient name', 'error'); return; }
+
+                    patients.push({
+                        id: patients.length + 1,
+                        name: name,
+                        age: age || 30,
+                        gender: gender || 'Male',
+                        condition: condition || 'General Checkup',
+                        phone: phone,
+                        status: 'Active'
+                    });
+                    showToast(`✅ ${t('patient')} "${name}" ${t('addSuccess')}`, 'success');
+                    break;
+                }
+
+                case 'appointment': {
+                    const patient = document.getElementById('modalPatient')?.value;
+                    const doctor = document.getElementById('modalDoctor')?.value;
+                    const date = document.getElementById('modalDate')?.value || '2024-01-20';
+                    const time = document.getElementById('modalTime')?.value || '10:00 AM';
+
+                    if (!patient || !doctor) { showToast('Please enter patient and doctor names', 'error'); return; }
+
+                    appointments.push({
+                        id: appointments.length + 1,
+                        patient: patient,
+                        doctor: doctor,
+                        date: date,
+                        time: time,
+                        status: 'Pending'
+                    });
+                    showToast(`✅ ${t('appointment')} booked for ${patient} with ${doctor}`, 'success');
+                    break;
+                }
+
+                case 'doctor': {
+                    const name = document.getElementById('modalName')?.value;
+                    const specialization = document.getElementById('modalSpecialization')?.value;
+                    const experience = document.getElementById('modalExperience')?.value || '5 years';
+                    const phone = document.getElementById('modalPhone')?.value || '+1 234-567-0000';
+
+                    if (!name) { showToast('Please enter doctor name', 'error'); return; }
+
+                    doctors.push({
+                        id: doctors.length + 1,
+                        name: name,
+                        specialization: specialization || 'General',
+                        experience: experience,
+                        rating: 4.5 + Math.random() * 0.5,
+                        availability: 'Available',
+                        phone: phone
+                    });
+                    showToast(`✅ ${t('doctor')} "${name}" ${t('addSuccess')}`, 'success');
+                    break;
+                }
+            }
+
+            closeModal();
+            updateUI();
+        }
+
+        function saveEditModal(type) {
+            if (!editingItem) return;
+
+            switch (type) {
+                case 'patient': {
+                    editingItem.name = document.getElementById('modalName')?.value || editingItem.name;
+                    editingItem.age = parseInt(document.getElementById('modalAge')?.value) || editingItem.age;
+                    editingItem.gender = document.getElementById('modalGender')?.value || editingItem.gender;
+                    editingItem.condition = document.getElementById('modalCondition')?.value || editingItem.condition;
+                    editingItem.status = document.getElementById('modalStatus')?.value || editingItem.status;
+                    editingItem.phone = document.getElementById('modalPhone')?.value || editingItem.phone;
+                    showToast(`✅ ${t('patient')} ${t('updateSuccess')}`, 'success');
+                    break;
+                }
+
+                case 'appointment': {
+                    editingItem.patient = document.getElementById('modalPatient')?.value || editingItem.patient;
+                    editingItem.doctor = document.getElementById('modalDoctor')?.value || editingItem.doctor;
+                    editingItem.date = document.getElementById('modalDate')?.value || editingItem.date;
+                    editingItem.time = document.getElementById('modalTime')?.value || editingItem.time;
+                    editingItem.status = document.getElementById('modalStatus')?.value || editingItem.status;
+                    showToast(`✅ ${t('appointment')} ${t('updateSuccess')}`, 'success');
+                    break;
+                }
+
+                case 'doctor': {
+                    editingItem.name = document.getElementById('modalName')?.value || editingItem.name;
+                    editingItem.specialization = document.getElementById('modalSpecialization')?.value || editingItem.specialization;
+                    editingItem.experience = document.getElementById('modalExperience')?.value || editingItem.experience;
+                    editingItem.phone = document.getElementById('modalPhone')?.value || editingItem.phone;
+                    editingItem.availability = document.getElementById('modalAvailability')?.value || editingItem.availability;
+                    showToast(`✅ ${t('doctor')} ${t('updateSuccess')}`, 'success');
+                    break;
+                }
+            }
+
+            closeModal();
+            updateUI();
+        }
+
+        // ============================================================
+        // CRUD OPERATIONS
+        // ============================================================
+        function deleteItem(type, id) {
+            if (!confirm(`${t('confirmDelete')} ${type}?`)) return;
+
+            let array;
+            let name;
+
+            switch (type) {
+                case 'patient':
+                    array = patients;
+                    name = patients.find(i => i.id === id)?.name || '';
+                    break;
+                case 'appointment':
+                    array = appointments;
+                    name = appointments.find(i => i.id === id)?.patient || '';
+                    break;
+                case 'doctor':
+                    array = doctors;
+                    name = doctors.find(i => i.id === id)?.name || '';
+                    break;
+            }
+
+            const index = array.findIndex(i => i.id === id);
+            if (index > -1) {
+                array.splice(index, 1);
+                showToast(`🗑️ ${type} "${name}" ${t('deleteSuccess')}`, 'info');
+                updateUI();
+            }
+        }
+
+        function filterTable(type, value) {
+            const search = value.toLowerCase();
+            switch (type) {
+                case 'patients':
+                    const rows = document.querySelectorAll('#patientsTableBody tr');
+                    rows.forEach(row => {
+                        const text = row.textContent.toLowerCase();
+                        row.style.display = text.includes(search) ? '' : 'none';
+                    });
+                    break;
+                case 'appointments':
+                    const cards = document.querySelectorAll('#appointmentsContainer .glass');
+                    cards.forEach(card => {
+                        const text = card.textContent.toLowerCase();
+                        card.style.display = text.includes(search) ? '' : 'none';
+                    });
+                    break;
+                case 'doctors':
+                    const docCards = document.querySelectorAll('#doctorsContainer .glass');
+                    docCards.forEach(card => {
+                        const text = card.textContent.toLowerCase();
+                        card.style.display = text.includes(search) ? '' : 'none';
+                    });
+                    break;
+            }
+        }
+
+        function updateUI() {
+            const content = document.getElementById('pageContent');
+            content.style.opacity = '0';
+            content.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                navigate(currentPage);
+                content.style.opacity = '1';
+                content.style.transform = 'scale(1)';
+                content.style.transition = 'all 0.3s ease';
+            }, 200);
+        }
+
+        // ============================================================
+        // AI CHATBOT LOGIC
+        // ============================================================
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            if (!message) return;
+            input.value = '';
+            addChatMessage('user', message);
+            processAICommand(message);
+        }
+
+        function sendQuickMessage(message) {
+            addChatMessage('user', message);
+            processAICommand(message);
+        }
+
+        function addChatMessage(type, text) {
+            chatHistory.push({ type, text });
+            const container = document.getElementById('chatMessages');
+            if (!container) return;
+
+            const div = document.createElement('div');
+            div.className = `flex ${type === 'user' ? 'justify-end' : 'justify-start'} animate-slide`;
+            div.innerHTML = `
+                <div class="chat-message ${type}">
+                    ${type === 'bot' ? '🤖 ' : ''}${text}
+                </div>
+            `;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function processAICommand(message) {
+            const lower = message.toLowerCase();
+
+            if (lower.includes('help') || lower.includes('what can you do')) {
+                addChatMessage('bot', `🤖 **I can help you with:**
+
+        📋 **Patient Management**
+        • Add patient: "Add patient John Doe, age 30, male, with flu"
+        • Show patients: "Show all patients"
+
+        📅 **Appointments**
+        • Book: "Book appointment for John Smith with Dr. Williams tomorrow at 10 AM"
+        • Show: "Show all appointments"
+
+        👨‍⚕️ **Doctors**
+        • Show: "Show all doctors"
+
+        📊 **Statistics**
+        • "Show dashboard" or "Stats"
+
+        🎤 **Voice Commands**
+        • Click the 🎤 button and speak naturally!`);
+                return;
+            }
+
+            if (lower.includes('add patient') || lower.includes('new patient')) {
+                const nameMatch = message.match(/add patient\s+([^,]+)/i) || message.match(/new patient\s+([^,]+)/i);
+                const ageMatch = message.match(/age\s*(\d+)/i);
+                const genderMatch = message.match(/\b(male|female|other)\b/i);
+                const conditionMatch = message.match(/with\s+([^.]+)/i) || message.match(/for\s+([^.]+)/i);
+
+                if (nameMatch) {
+                    const name = nameMatch[1].trim();
+                    const age = ageMatch ? parseInt(ageMatch[1]) : Math.floor(Math.random() * 50) + 20;
+                    const gender = genderMatch ? genderMatch[1].charAt(0).toUpperCase() + genderMatch[1].slice(1) : 'Male';
+                    const condition = conditionMatch ? conditionMatch[1].trim() : 'General Checkup';
+
+                    patients.push({
+                        id: patients.length + 1,
+                        name: name,
+                        age: age,
+                        gender: gender,
+                        condition: condition,
+                        phone: '+1 234-567-' + String(9000 + patients.length).padStart(4, '0'),
+                        status: 'Active'
+                    });
+                    addChatMessage('bot', `✅ **${t('patient')} "${name}" ${t('addSuccess')}**\n${t('age')}: ${age}, ${t('gender')}: ${gender}, ${t('condition')}: ${condition}`);
+                    showToast(`✅ ${t('patient')} "${name}" ${t('addSuccess')}`, 'success');
+                    updateUI();
+                } else {
+                    addChatMessage('bot', `📋 I need the patient name. Try: "Add patient John Doe, age 30, male, with flu"`);
+                }
+                return;
+            }
+
+            if (lower.includes('book appointment') || lower.includes('schedule appointment')) {
+                const patientMatch = message.match(/for\s+([^,]+)/i) || message.match(/with patient\s+([^,]+)/i);
+                const doctorMatch = message.match(/with\s+(dr\.?\s*\w+)/i);
+                const dateMatch = message.match(/on\s+(\d{4}-\d{2}-\d{2})/i) || message.match(/tomorrow/i) || message.match(/today/i);
+                const timeMatch = message.match(/at\s+(\d{1,2}\s*[AP]M)/i);
+
+                if (patientMatch && doctorMatch) {
+                    const patient = patientMatch[1].trim();
+                    const doctor = doctorMatch[1].trim();
+                    let date = '2024-01-20';
+                    let time = '10:00 AM';
+
+                    if (dateMatch) {
+                        if (dateMatch[1]) date = dateMatch[1];
+                        else if (dateMatch[0].includes('tomorrow')) {
+                            const d = new Date();
+                            d.setDate(d.getDate() + 1);
+                            date = d.toISOString().split('T')[0];
+                        }
+                    }
+                    if (timeMatch) time = timeMatch[1];
+
+                    appointments.push({
+                        id: appointments.length + 1,
+                        patient: patient,
+                        doctor: doctor,
+                        date: date,
+                        time: time,
+                        status: 'Pending'
+                    });
+                    addChatMessage('bot', `✅ **${t('appointment')} booked!**\n${t('patient')}: ${patient}\n${t('doctor')}: ${doctor}\n${t('date')}: ${date}\n${t('time')}: ${time}`);
+                    showToast(`✅ ${t('appointment')} booked for ${patient}`, 'success');
+                    updateUI();
+                } else {
+                    addChatMessage('bot', `📋 Please specify patient and doctor. Try: "Book appointment for John Smith with Dr. Williams tomorrow at 10 AM"`);
+                }
+                return;
+            }
+
+            if (lower.includes('show all patients') || lower.includes('list patients') || lower.includes('view patients')) {
+                if (patients.length === 0) {
+                    addChatMessage('bot', `📋 ${t('noPatients')}. Add a patient using the "Add patient" command!`);
+                } else {
+                    const list = patients.map(p =>
+                        `• **${p.name}** (${p.age}, ${p.gender}) - ${p.condition} ${p.status === 'Active' ? '🟢' : '🔴'}`
+                        ).join('\n');
+                    addChatMessage('bot', `📋 **${t('totalPatients')} (${patients.length}):**\n${list}`);
+                }
+                return;
+            }
+
+            if (lower.includes('show all appointments') || lower.includes('list appointments')) {
+                if (appointments.length === 0) {
+                    addChatMessage('bot', `📅 ${t('noAppointments')}. Book one using the "Book appointment" command!`);
+                } else {
+                    const list = appointments.map(a =>
+                        `• **${a.patient}** with ${a.doctor} - ${a.date} ${a.time} (${a.status})`).join('\n');
+                    addChatMessage('bot', `📅 **${t('appointments')} (${appointments.length}):**\n${list}`);
+                }
+                return;
+            }
+
+            if (lower.includes('show all doctors') || lower.includes('list doctors')) {
+                if (doctors.length === 0) {
+                    addChatMessage('bot', `👨‍⚕️ ${t('noDoctors')}. Add a doctor using the "Add doctor" command!`);
+                } else {
+                    const list = doctors.map(d =>
+                        `• **${d.name}** - ${d.specialization} (${d.availability}) ⭐ ${d.rating}`).join('\n');
+                    addChatMessage('bot', `👨‍⚕️ **${t('activeDoctors')} (${doctors.length}):**\n${list}`);
+                }
+                return;
+            }
+
+            if (lower.includes('stats') || lower.includes('summary') || lower.includes('dashboard')) {
+                const activePatients = patients.filter(p => p.status === 'Active').length;
+                const confirmedAppointments = appointments.filter(a => a.status === 'Confirmed').length;
+                const availableDoctors = doctors.filter(d => d.availability === 'Available').length;
+
+                addChatMessage('bot', `📊 **${t('dashboard')}**
+
+        👤 **${t('totalPatients')}:** ${patients.length}
+           • Active: ${activePatients}
+           • Critical: ${patients.filter(p => p.status === 'Critical').length}
+
+        📅 **${t('appointments')}:** ${appointments.length}
+           • Confirmed: ${confirmedAppointments}
+           • Pending: ${appointments.filter(a => a.status === 'Pending').length}
+
+        👨‍⚕️ **${t('activeDoctors')}:** ${doctors.length}
+           • Available: ${availableDoctors}
+           • Busy: ${doctors.filter(d => d.availability === 'Busy').length}
+
+        💬 **${t('aiConversations')}:** ${chatHistory.length}`);
+                return;
+            }
+
+            if (lower.includes('find patient') || lower.includes('search patient')) {
+                const nameMatch = message.match(/patient\s+([^.]+)/i) || message.match(/find\s+([^.]+)/i);
+                if (nameMatch) {
+                    const searchName = nameMatch[1].trim().toLowerCase();
+                    const found = patients.filter(p => p.name.toLowerCase().includes(searchName));
+                    if (found.length > 0) {
+                        const list = found.map(p =>
+                            `• **${p.name}** (${p.age}, ${p.gender}) - ${p.condition} (${p.status})`).join('\n');
+                        addChatMessage('bot', `🔍 **Found ${found.length} patient(s):**\n${list}`);
+                    } else {
+                        addChatMessage('bot', `🔍 No patients found with name containing "${searchName}"`);
+                    }
+                } else {
+                    addChatMessage('bot', '🔍 Try: "Find patient John" or "Search patient Smith"');
+                }
+                return;
+            }
+
+            if (lower.includes('delete patient') || lower.includes('remove patient')) {
+                const nameMatch = message.match(/delete patient\s+([^.]+)/i) || message.match(/remove patient\s+([^.]+)/i);
+                if (nameMatch) {
+                    const delName = nameMatch[1].trim().toLowerCase();
+                    const index = patients.findIndex(p => p.name.toLowerCase() === delName);
+                    if (index > -1) {
+                        const removed = patients[index];
+                        patients.splice(index, 1);
+                        addChatMessage('bot', `🗑️ **${t('patient')} "${removed.name}" ${t('deleteSuccess')}**`);
+                        showToast(`🗑️ ${t('patient')} "${removed.name}" ${t('deleteSuccess')}`, 'info');
+                        updateUI();
+                    } else {
+                        addChatMessage('bot', `🔍 No ${t('patient')} found with name "${delName}"`);
+                    }
+                } else {
+                    addChatMessage('bot', `🗑️ Try: "Delete patient John Smith"`);
+                }
+                return;
+            }
+
+            if (lower.match(/^(hi|hello|hey|greetings|good morning|good afternoon|good evening)/)) {
+                const greetings = [
+                    'Hello! How can I help you with healthcare management today? 😊',
+                    'Hi there! I\'m your AI healthcare assistant. How can I assist you? 🤖',
+                    'Greetings! Ready to help with patients, appointments, or doctors! 🏥',
+                    'Hello! Ask me anything about your healthcare system! 💬'
+                ];
+                addChatMessage('bot', greetings[Math.floor(Math.random() * greetings.length)]);
+                return;
+            }
+
+            if (lower.includes('thank')) {
+                addChatMessage('bot', 'You\'re welcome! 😊 Is there anything else I can help you with?');
+                return;
+            }
+
+            const responses = [
+                "I understand you're asking about healthcare. Could you be more specific? Try 'help' to see what I can do.",
+                "That's an interesting topic! I can help with patients, appointments, doctors, or statistics.",
+                "I'm here to assist! Try asking me to add a patient, book an appointment, or show dashboard stats.",
+                "I specialize in healthcare management. You can ask me to manage patients, appointments, or doctors.",
+                "I didn't quite catch that. Try saying 'help' to see all my capabilities! 🧠"
+            ];
+            addChatMessage('bot', responses[Math.floor(Math.random() * responses.length)]);
+        }
+
+        // ============================================================
+        // VOICE COMMANDS
+        // ============================================================
+        let isListening = false;
+        let recognition = null;
+
+        function toggleVoice() {
+            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+                showToast('🎤 Voice recognition requires Chrome or Edge browser.', 'error');
+                return;
+            }
+
+            const btn = document.getElementById('voiceBtn');
+            const status = document.getElementById('voiceStatus');
+
+            if (isListening) {
+                stopVoice();
+                return;
+            }
+
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            recognition = new SpeechRecognition();
+            recognition.lang = 'en-US';
+            recognition.continuous = false;
+            recognition.interimResults = false;
+
+            recognition.onstart = () => {
+                isListening = true;
+                btn.classList.add('listening');
+                btn.textContent = '⏹️';
+                status.classList.remove('hidden');
+                status.textContent = '🎤 Listening... Speak now';
+            };
+
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                status.textContent = `🎤 You said: "${transcript}"`;
+                document.getElementById('chatInput').value = transcript;
+                speakText(`I heard you say: ${transcript}`);
+                setTimeout(() => sendMessage(), 500);
+                stopVoice();
+            };
+
+            recognition.onerror = (event) => {
+                status.textContent = `❌ Error: ${event.error}`;
+                setTimeout(() => stopVoice(), 2000);
+            };
+
+            recognition.onend = () => {
+                stopVoice();
+            };
+
+            recognition.start();
+        }
+
+        function stopVoice() {
+            if (recognition) {
+                try { recognition.stop(); } catch (e) {}
+            }
+            isListening = false;
+            const btn = document.getElementById('voiceBtn');
+            const status = document.getElementById('voiceStatus');
+            btn.classList.remove('listening');
+            btn.textContent = '🎤';
+            status.classList.add('hidden');
+        }
+
+        function startVoiceCommand() {
+            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+                showToast('🎤 Voice recognition requires Chrome or Edge browser.', 'error');
+                return;
+            }
+            navigate('chatbot');
+            setTimeout(() => toggleVoice(), 500);
+        }
+
+        function speakText(text) {
+            if (!('speechSynthesis' in window)) return;
+            
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9;
+            utterance.pitch = 1;
+            utterance.volume = 1;
+            utterance.lang = 'en-US';
+            
+            const voices = window.speechSynthesis.getVoices();
+            const femaleVoice = voices.find(v => v.lang.startsWith('en') && v.name.includes('Female'));
+            if (femaleVoice) utterance.voice = femaleVoice;
+            
+            window.speechSynthesis.speak(utterance);
+        }
+
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.getVoices();
+            window.speechSynthesis.onvoiceschanged = () => {
+                window.speechSynthesis.getVoices();
+            };
+        }
+
+        function clearChat() {
+            chatHistory = [];
+            const container = document.getElementById('chatMessages');
+            if (container) {
+                container.innerHTML = `
+                    <div class="text-center text-gray-400 py-8 md:py-12">
+                        <div class="text-4xl mb-4">💬</div>
+                        <p>${t('startChat')}</p>
+                        <p class="text-sm">${t('chatExample')}</p>
+                    </div>
+                `;
+            }
+            showToast('🗑️ Chat cleared!', 'info');
+        }
+
+        // ============================================================
+        // INITIALIZATION
+        // ============================================================
+        updateUItexts();
+        console.log('🔐 AI HealthCare Pro v5.0 loaded successfully!');
+        console.log('👤 Demo Users: admin/admin123, doctor/doctor123, nurse/nurse123, receptionist/reception123');
+        console.log('🌍 Languages: English, Tamil, Hindi, Telugu, Kannada');
+    </script>
+
+</body>
+</html>
